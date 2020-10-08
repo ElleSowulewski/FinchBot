@@ -1,0 +1,10 @@
+C:\Users\Elle\Documents\CIT110\Project_FinchControl.MenuStarter-master\Project_FinchControl.MenuStarter-master\Project_FinchControl\bin\Debug\Project_FinchControl.exe.config
+C:\Users\Elle\Documents\CIT110\Project_FinchControl.MenuStarter-master\Project_FinchControl.MenuStarter-master\Project_FinchControl\bin\Debug\Project_FinchControl.exe
+C:\Users\Elle\Documents\CIT110\Project_FinchControl.MenuStarter-master\Project_FinchControl.MenuStarter-master\Project_FinchControl\bin\Debug\Project_FinchControl.pdb
+C:\Users\Elle\Documents\CIT110\Project_FinchControl.MenuStarter-master\Project_FinchControl.MenuStarter-master\Project_FinchControl\bin\Debug\FinchAPI.dll
+C:\Users\Elle\Documents\CIT110\Project_FinchControl.MenuStarter-master\Project_FinchControl.MenuStarter-master\Project_FinchControl\bin\Debug\HidSharp.dll
+C:\Users\Elle\Documents\CIT110\Project_FinchControl.MenuStarter-master\Project_FinchControl.MenuStarter-master\Project_FinchControl\obj\Debug\Project_FinchControl.csprojAssemblyReference.cache
+C:\Users\Elle\Documents\CIT110\Project_FinchControl.MenuStarter-master\Project_FinchControl.MenuStarter-master\Project_FinchControl\obj\Debug\Project_FinchControl.csproj.CoreCompileInputs.cache
+C:\Users\Elle\Documents\CIT110\Project_FinchControl.MenuStarter-master\Project_FinchControl.MenuStarter-master\Project_FinchControl\obj\Debug\Project_FinchControl.csproj.CopyComplete
+C:\Users\Elle\Documents\CIT110\Project_FinchControl.MenuStarter-master\Project_FinchControl.MenuStarter-master\Project_FinchControl\obj\Debug\Project_FinchControl.exe
+C:\Users\Elle\Documents\CIT110\Project_FinchControl.MenuStarter-master\Project_FinchControl.MenuStarter-master\Project_FinchControl\obj\Debug\Project_FinchControl.pdb
