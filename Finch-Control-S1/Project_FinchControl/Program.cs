@@ -294,14 +294,105 @@ namespace Project_FinchControl
         static void DataRecorderDisplayMenuScreen(Finch finchRobot)
         {
 
-            Console.CursorVisible = false;
+            int numberOfDataPoints.
+            double dataPointFrequency.
+            double[] temperatures
 
-            DisplayScreenHeader("Data Recorder");
+            Console.CursorVisible = true;
 
-            Console.WriteLine("\tThis module is still under development.");
+            bool quitTalentShowMenu = false;
+            string menuChoice;
 
-            DisplayContinuePrompt();
+            do
+            {
+                DisplayScreenHeader("Data Recorder Menu");
 
+                //
+                // get user menu choice
+                //
+                Console.WriteLine("\ta) Number of Data Points");
+                Console.WriteLine("\tb) Frequency of Data Ponts");
+                Console.WriteLine("\tc) Get Data");
+                Console.WriteLine("\td) Show Data");
+                Console.WriteLine("\tq) Main Menu");
+                Console.Write("\t\tEnter Choice:");
+                menuChoice = Console.ReadLine().ToLower();
+
+                //
+                // process user menu choice
+                //
+                switch (menuChoice)
+                {
+                    case "a":
+                        
+                        break;
+
+                    case "b":
+
+                        break;
+
+                    case "c":
+
+                        break;
+
+                    case "d":
+
+                        break;
+
+                    case "q":
+                        quitTalentShowMenu = true;
+                        break;
+
+                    default:
+                        Console.WriteLine();
+                        Console.WriteLine("\tPlease enter a letter for the menu choice.");
+                        DisplayContinuePrompt();
+                        break;
+                }
+
+            } while (!quitTalentShowMenu);
+        }
+
+        }
+
+        /// <summary>
+        /// *****************************************************************
+        /// *             Data Recorder > Number of Data Points             *
+        /// *****************************************************************
+        /// </summary>
+        /// <param name="finchRobot">finch robot object</param>
+        ///
+
+        static int DataRecorderDisplayGetNumberOfDataPoints()
+        {
+    
+            DisplayScreenHeader("Number of Data Points");
+
+            bool validResponse = false;
+            
+            while validResponse = false
+            {
+        
+                Console.WriteLine("Please enter the number of data points:");
+                numberOfDataPoints = Console.ReadLine();
+
+                if numberOfDataPoints >= 1 and numberOfDataPoints <= 100
+                {
+            
+                    validResponse = true;
+                    ToInt(numberOfDataPoints)
+            
+                }
+                else
+                {
+            
+                    Console.WriteLine("That is not a valid response. Please enter a value between 1 and 100.")
+            
+                }
+
+        
+            }
+    
         }
 
         #endregion
