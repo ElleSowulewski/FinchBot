@@ -428,12 +428,12 @@ namespace Project_FinchControl
             Console.WriteLine("\tApplication is ready to record temperature data. Press any key to continue.");
             Console.ReadKey();
 
-            for (int index = 0; index > numberOfDataPoints; index++)
+            for (int index = 0; index < numberOfDataPoints; index++)
             {
 
                 temperatures[index] = finchRobot.getTemperature();
                 Console.WriteLine($"\tReading: {index + 1} : {temperatures[index]:n2}");
-                int waitInSeconds = (int)(dataPointFrequency * 1000);
+                int waitInSeconds = (int)(dataPointFrequency * 1000); 
                 finchRobot.wait(waitInSeconds);
 
             }
@@ -557,7 +557,7 @@ namespace Project_FinchControl
 
             finchRobot.disConnect();
 
-            Console.WriteLine("\tThe Finch robot is now disconnect.");
+            Console.WriteLine("\tThe Finch robot is now disconnected.");
 
             DisplayMenuPrompt("Main Menu");
         }
@@ -569,6 +569,7 @@ namespace Project_FinchControl
         /// </summary>
         /// <param name="finchRobot">finch robot object</param>
         /// <returns>notify if the robot is connected</returns>
+
         static bool DisplayConnectFinchRobot(Finch finchRobot)
         {
             Console.CursorVisible = false;
