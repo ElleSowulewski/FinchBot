@@ -18,3 +18,13 @@ C:\Users\Elle\Documents\CIT110\Week04\Finch-Control-S1\Project_FinchControl\obj\
 C:\Users\Elle\Documents\CIT110\Week04\Finch-Control-S1\Project_FinchControl\obj\Debug\Project_FinchControl.csproj.CopyComplete
 C:\Users\Elle\Documents\CIT110\Week04\Finch-Control-S1\Project_FinchControl\obj\Debug\Project_FinchControl.exe
 C:\Users\Elle\Documents\CIT110\Week04\Finch-Control-S1\Project_FinchControl\obj\Debug\Project_FinchControl.pdb
+C:\Users\Elle\Documents\CIT110\Week04\Finch-Control\Project_FinchControl\obj\Debug\Project_FinchControl.csprojAssemblyReference.cache
+C:\Users\Elle\Documents\CIT110\Week04\Finch-Control\Project_FinchControl\obj\Debug\Project_FinchControl.csproj.CoreCompileInputs.cache
+C:\Users\Elle\Documents\CIT110\Week04\Finch-Control\Project_FinchControl\obj\Debug\Project_FinchControl.exe
+C:\Users\Elle\Documents\CIT110\Week04\Finch-Control\Project_FinchControl\obj\Debug\Project_FinchControl.pdb
+C:\Users\Elle\Documents\CIT110\Week04\Finch-Control\Project_FinchControl\bin\Debug\Project_FinchControl.exe.config
+C:\Users\Elle\Documents\CIT110\Week04\Finch-Control\Project_FinchControl\bin\Debug\Project_FinchControl.exe
+C:\Users\Elle\Documents\CIT110\Week04\Finch-Control\Project_FinchControl\bin\Debug\Project_FinchControl.pdb
+C:\Users\Elle\Documents\CIT110\Week04\Finch-Control\Project_FinchControl\bin\Debug\FinchAPI.dll
+C:\Users\Elle\Documents\CIT110\Week04\Finch-Control\Project_FinchControl\bin\Debug\HidSharp.dll
+C:\Users\Elle\Documents\CIT110\Week04\Finch-Control\Project_FinchControl\obj\Debug\Project_FinchControl.csproj.CopyComplete
