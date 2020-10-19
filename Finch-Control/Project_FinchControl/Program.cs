@@ -93,7 +93,7 @@ namespace Project_FinchControl
 
                     case "d":
 
-                        LightAlarmDisplayMenuScreen(finchRobot);
+                        AlarmDisplayMenuScreen(finchRobot);
                         break;
 
                     case "e":
@@ -492,13 +492,13 @@ namespace Project_FinchControl
 
         /// <summary>
         /// *****************************************************************
-        /// *                         Light Alarm                           *
+        /// *                         Alarm                                 *
         /// *****************************************************************
         /// </summary>
         /// <param name="finchRobot">finch robot object</param>
         /// 
 
-        static void LightAlarmDisplayMenuScreen(Finch finchRobot)
+        static void AlarmDisplayMenuScreen(Finch finchRobot)
         {
 
             Console.CursorVisible = false;
@@ -507,22 +507,24 @@ namespace Project_FinchControl
             string menuChoice;
 
             string sensorsToMonitor = "";
+            bool monitorTemperature = false;
             string rangeType = "";
             int minMaxThresholdValue = 0;
             int timeToMonitor = 0;
 
             do
             {
-                DisplayScreenHeader("Light Alarm Menu");
+                DisplayScreenHeader("Alarm Menu");
 
                 //
                 // get user menu choice
                 //
                 Console.WriteLine("\ta) Set Sensors to Monitor");
-                Console.WriteLine("\tb) Set Range Type");
-                Console.WriteLine("\tc) Set Min/Max Threshold");
-                Console.WriteLine("\td) Set Time to Monitor");
-                Console.WriteLine("\te) Set Alarm");
+                Console.WriteLine("\tb) Monitor Temperature");
+                Console.WriteLine("\tc) Set Range Type");
+                Console.WriteLine("\td) Set Min/Max Threshold");
+                Console.WriteLine("\te) Set Time to Monitor");
+                Console.WriteLine("\tf) Set Alarm");
                 Console.WriteLine("\tq) Main Menu");
                 Console.Write("\t\tEnter Choice:");
                 menuChoice = Console.ReadLine().ToLower();
@@ -535,28 +537,34 @@ namespace Project_FinchControl
                     case "a":
 
 
-                        sensorsToMonitor = LightAlarmDisplaySetSensorsToMonitor();
+                        sensorsToMonitor = AlarmDisplaySetSensorsToMonitor();
                         break;
 
                     case "b":
 
 
-                        rangeType = LightAlarmDisplaySetRangeType();
+                        monitorTemperature = AlarmDisplayMonitorTemp();
                         break;
 
                     case "c":
 
-                        minMaxThresholdValue = LightAlarmDisplaySetMinMaxThresholdValue(rangeType, finchRobot);
+                        rangeType = AlarmDisplaySetRangeType();
                         break;
 
                     case "d":
 
-                        timeToMonitor = LightAlarmDisplaySetTimeToMonitor();
+                        minMaxThresholdValue = AlarmDisplaySetMinMaxThresholdValue(rangeType, monitorTemperature, finchRobot);
                         break;
 
                     case "e":
 
-                        LightAlarmSetAlarm(finchRobot, sensorsToMonitor, rangeType, minMaxThresholdValue, timeToMonitor);
+                        timeToMonitor = AlarmDisplaySetTimeToMonitor();
+                        break;
+
+                    case "f":
+
+
+                        AlarmSetAlarm(finchRobot, sensorsToMonitor, monitorTemperature, rangeType, minMaxThresholdValue, timeToMonitor);
                         break;
 
                     case "q":
@@ -579,24 +587,24 @@ namespace Project_FinchControl
 
         /// <summary>
         /// *****************************************************************
-        /// *            Light Alarm < Set Sensors To Monitor               *
+        /// *                Alarm < Set Sensors To Monitor                 *
         /// *****************************************************************
         /// </summary>
         /// <param name="finchRobot">finch robot object</param>
         /// 
 
-        static string LightAlarmDisplaySetSensorsToMonitor()
+        static string AlarmDisplaySetSensorsToMonitor()
         {
 
             string sensorsToMonitor;
 
             DisplayScreenHeader("Set Sensors To Monitor");
 
-            Console.Write("\tSensors to Monitor [left, right, both]");
+            Console.Write("\tLight sensors to Monitor [left, right, both]");
             sensorsToMonitor = Console.ReadLine();
             Console.WriteLine($"\tSensors to Monitor set to: {sensorsToMonitor}");
 
-            DisplayMenuPrompt("Light Alarm");
+            DisplayMenuPrompt("Alarm Menu");
 
             return sensorsToMonitor;
 
@@ -604,13 +612,51 @@ namespace Project_FinchControl
 
         /// <summary>
         /// *****************************************************************
-        /// *                  Light Alarm < Range Type                     *
+        /// *                    Alarm < Monitor Temp                       *
         /// *****************************************************************
         /// </summary>
         /// <param name="finchRobot">finch robot object</param>
         /// 
 
-        static string LightAlarmDisplaySetRangeType()
+        static bool AlarmDisplayMonitorTemp()
+        {
+
+            bool monitorTemp;
+            string input;
+
+            DisplayScreenHeader("Monitor Temp");
+
+            Console.Write("\tShould temperature be monitored as well? [yes/no]");
+            input = Console.ReadLine();
+            
+            if (input == "yes")
+            {
+                monitorTemp = true;
+            }
+            else
+            {
+
+                monitorTemp = false;
+
+            }
+
+            Console.WriteLine($"\tMonitor Temperature set to: {monitorTemp}");
+
+            DisplayMenuPrompt("Alarm Menu");
+
+            return monitorTemp;
+
+        }
+
+        /// <summary>
+        /// *****************************************************************
+        /// *                     Alarm < Range Type                        *
+        /// *****************************************************************
+        /// </summary>
+        /// <param name="finchRobot">finch robot object</param>
+        /// 
+
+        static string AlarmDisplaySetRangeType()
         {
 
             string rangeType;
@@ -621,7 +667,7 @@ namespace Project_FinchControl
             rangeType = Console.ReadLine();
             Console.WriteLine($"\tRange Type set to: {rangeType}");
 
-            DisplayMenuPrompt("Light Alarm");
+            DisplayMenuPrompt("Alarm Menu");
 
             return rangeType;
 
@@ -629,13 +675,13 @@ namespace Project_FinchControl
 
         /// <summary>
         /// *****************************************************************
-        /// *                Light Alarm < Threshold Value                  *
+        /// *                   Alarm < Threshold Value                     *
         /// *****************************************************************
         /// </summary>
         /// <param name="finchRobot">finch robot object</param>
         ///
 
-        static int LightAlarmDisplaySetMinMaxThresholdValue(string rangeType, Finch finchRobot)
+        static int AlarmDisplaySetMinMaxThresholdValue(string rangeType, bool monitorTemp, Finch finchRobot)
         {
 
             int minMaxThresholdValue;
@@ -644,14 +690,22 @@ namespace Project_FinchControl
 
             Console.WriteLine($"\tLeft light sensor ambient value: {finchRobot.getLeftLightSensor()}");
             Console.WriteLine($"\tLeft right sensor ambient value: {finchRobot.getRightLightSensor()}");
+
+            if(monitorTemp == true)
+            {
+    
+                Console.WriteLine($"\tTemperature ambient value: {finchRobot.getTemperature()}");
+
+            }
+            
             Console.WriteLine();
 
-            Console.WriteLine($"\tEnter the {rangeType} light sensor value:");
+            Console.WriteLine($"\tEnter the {rangeType} sensor value:");
             int.TryParse(Console.ReadLine(), out minMaxThresholdValue);
 
             Console.WriteLine($"\tThe {rangeType} is set to {minMaxThresholdValue}.");
 
-            DisplayMenuPrompt("Light Alarm Menu");
+            DisplayMenuPrompt("Alarm Menu");
 
             return minMaxThresholdValue;
 
@@ -659,23 +713,23 @@ namespace Project_FinchControl
 
         /// <summary>
         /// *****************************************************************
-        /// *                Light Alarm < Time To Monitor                  *
+        /// *                    Alarm < Time To Monitor                    *
         /// *****************************************************************
         /// </summary>
         /// <param name="finchRobot">finch robot object</param>
         ///
 
-        static int LightAlarmDisplaySetTimeToMonitor()
+        static int AlarmDisplaySetTimeToMonitor()
         {
 
             int timeToMonitor;
 
             DisplayScreenHeader("Set Time to Monitor");
 
-            Console.WriteLine("\tPlease enter the time to monitor in seconds.");
+            Console.WriteLine("\tPlease enter the time to monitor.");
             int.TryParse(Console.ReadLine(), out timeToMonitor);
 
-            DisplayMenuPrompt("Light Alarm Menu");
+            DisplayMenuPrompt("Alarm Menu");
 
             return timeToMonitor;
 
@@ -683,22 +737,24 @@ namespace Project_FinchControl
 
         /// <summary>
         /// *****************************************************************
-        /// *                   Light Alarm < Set Alarm                     *
+        /// *                      Alarm < Set Alarm                        *
         /// *****************************************************************
         /// </summary>
         /// <param name="finchRobot">finch robot object</param>
         ///
 
-        static void LightAlarmSetAlarm(Finch finchRobot, string sensorsToMonitor, string rangeType, int minMaxThresholdValue, int timeToMonitor)
+        static void AlarmSetAlarm(Finch finchRobot, string sensorsToMonitor, bool monitorTemperature, string rangeType, int minMaxThresholdValue, int timeToMonitor)
         {
 
             int secondsElapsed = 0;
             bool thresholdExceeded = false;
             int currentLightSensorValue = 0;
+            double currentTemperatureValue = 0;
 
             DisplayScreenHeader("Set Alarm");
 
             Console.WriteLine($"\tSensors to monitor: {sensorsToMonitor}");
+            Console.WriteLine($"\tMonitor Temperature: {monitorTemperature}");
             Console.WriteLine($"\tRange type: {rangeType}");
             Console.WriteLine($"\tMin/Max threshold value: {minMaxThresholdValue}");
             Console.WriteLine($"\tTime to monitor: {timeToMonitor}");
@@ -731,12 +787,22 @@ namespace Project_FinchControl
 
                 }
 
+                switch(monitorTemperature)
+                {
+
+                    case true:
+
+                        currentTemperatureValue = finchRobot.getTemperature();
+                        break;
+
+                }
+
                 switch(rangeType)
                 {
 
                     case "minimum":
 
-                        if (currentLightSensorValue < minMaxThresholdValue)
+                        if (currentLightSensorValue < minMaxThresholdValue && currentTemperatureValue < minMaxThresholdValue)
                         {
 
                             thresholdExceeded = true;
@@ -747,7 +813,7 @@ namespace Project_FinchControl
 
                     case "maximum":
 
-                        if (currentLightSensorValue > minMaxThresholdValue)
+                        if (currentLightSensorValue > minMaxThresholdValue && currentTemperatureValue > minMaxThresholdValue)
                         {
 
                             thresholdExceeded = true;
@@ -764,17 +830,25 @@ namespace Project_FinchControl
             if (thresholdExceeded)
             {
 
-                Console.WriteLine($"\tThe {rangeType} threshold value was exceeded by the current light value: {currentLightSensorValue} ");
+                Console.WriteLine($"\tThe {rangeType} threshold value was exceeded by the current sensor values: ");
+                Console.WriteLine($"\t{currentLightSensorValue}");
+                
+                if (monitorTemperature == true)
+                {
+
+                    Console.WriteLine($"\t{currentTemperatureValue}");
+
+                }
 
             }
             else 
             {
 
-                Console.WriteLine($"\tThe {rangeType} threshold value was not exceeded by the current light value: {currentLightSensorValue} ");
+                Console.WriteLine($"\tThe {rangeType} threshold value was not exceeded");
 
             }
 
-            DisplayMenuPrompt("Alarm Light Menu");
+            DisplayMenuPrompt("Alarm Menu");
 
         }
 
