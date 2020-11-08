@@ -28,3 +28,4 @@ C:\Users\Elle\Documents\CIT110\Week04\Finch-Control\Project_FinchControl\bin\Deb
 C:\Users\Elle\Documents\CIT110\Week04\Finch-Control\Project_FinchControl\bin\Debug\FinchAPI.dll
 C:\Users\Elle\Documents\CIT110\Week04\Finch-Control\Project_FinchControl\bin\Debug\HidSharp.dll
 C:\Users\Elle\Documents\CIT110\Week04\Finch-Control\Project_FinchControl\obj\Debug\Project_FinchControl.csproj.CopyComplete
+C:\Users\Elle\Documents\CIT110\Week04\Finch-Control\Project_FinchControl\bin\Debug\Data\Theme.txt

@@ -55,8 +55,10 @@ namespace Project_FinchControl
         /// </summary>
         static void SetTheme()
         {
-            Console.ForegroundColor = ConsoleColor.DarkBlue;
-            Console.BackgroundColor = ConsoleColor.White;
+            (ConsoleColor foregroundColor, ConsoleColor backgroundColor) themeColors;
+            themeColors = ReadThemeData();
+            Console.ForegroundColor = themeColors.foregroundColor;
+            Console.BackgroundColor = themeColors.backgroundColor;
         }
 
         /// <summary>
@@ -86,6 +88,7 @@ namespace Project_FinchControl
                 Console.WriteLine("\td) Alarm System");
                 Console.WriteLine("\te) User Programming");
                 Console.WriteLine("\tf) Disconnect Finch Robot");
+                Console.WriteLine("\tg) Customize Theme");
                 Console.WriteLine("\tq) Quit");
                 Console.Write("\t\tEnter Choice:");
                 menuChoice = Console.ReadLine().ToLower();
@@ -120,6 +123,10 @@ namespace Project_FinchControl
 
                     case "f":
                         DisplayDisconnectFinchRobot(finchRobot);
+                        break;
+
+                    case "g":
+                        DisplaySetTheme();
                         break;
 
                     case "q":
@@ -1029,29 +1036,6 @@ namespace Project_FinchControl
 
         /// <summary>
         /// *****************************************************************
-        /// *             User Programming < Display Commands               *
-        /// *****************************************************************
-        /// </summary>
-        /// <param name="finchRobot">finch robot object</param>
-        /// 
-
-        static void UserProgrammingDisplayFinchCommands(List<Command> commands)
-        {
-
-            DisplayScreenHeader("Finch Robot Commands");
-
-            foreach (Command command in commands)
-            {
-
-                Console.WriteLine($"\t{command}");
-
-            }
-
-            DisplayMenuPrompt("User Programming");
-        }
-
-        /// <summary>
-        /// *****************************************************************
         /// *            User Programming < Get Finch Commands              *
         /// *****************************************************************
         /// </summary>
@@ -1105,6 +1089,31 @@ namespace Project_FinchControl
 
         }
 
+
+        /// <summary>
+        /// *****************************************************************
+        /// *             User Programming < Display Commands               *
+        /// *****************************************************************
+        /// </summary>
+        /// <param name="finchRobot">finch robot object</param>
+        /// 
+
+        static void UserProgrammingDisplayFinchCommands(List<Command> commands)
+        {
+
+            DisplayScreenHeader("Finch Robot Commands");
+
+            foreach (Command command in commands)
+            {
+
+                Console.WriteLine($"\t{command}");
+
+            }
+
+            DisplayMenuPrompt("User Programming");
+        }
+
+        
         /// <summary>
         /// *****************************************************************
         /// *             User Programming < Excecute Commands              *
@@ -1208,6 +1217,134 @@ namespace Project_FinchControl
 
             DisplayMenuPrompt("User Programming");
 
+        }
+
+        #endregion
+
+        #region SET THEME
+
+        /// <summary>
+        /// *****************************************************************
+        /// *                     Display Set Theme                         *
+        /// *****************************************************************
+        /// </summary>
+        /// <param name="finchRobot">finch robot object</param>
+        /// 
+
+        static void DisplaySetTheme()
+        {
+            (ConsoleColor foregroundColor, ConsoleColor backgroundColor) themeColors;
+            bool themeSet = false;
+
+            themeColors = ReadThemeData();
+            Console.ForegroundColor = themeColors.foregroundColor;
+            Console.BackgroundColor = themeColors.backgroundColor;
+            Console.Clear();
+            DisplayScreenHeader("Set Color Theme");
+
+            Console.WriteLine($"\tCurrent foreground color: {Console.ForegroundColor}");
+            Console.WriteLine($"\tCurrent background color: {Console.BackgroundColor}");
+            Console.WriteLine();
+
+            Console.Write("\tWould you like to change the theme? [ yes / no ]");
+            if (Console.ReadLine().ToLower() == "yes")
+            {
+                do
+                {
+                    themeColors.foregroundColor = GetColorsFromUser("foreground");
+                    themeColors.backgroundColor = GetColorsFromUser("background");
+
+                    Console.ForegroundColor = themeColors.foregroundColor;
+                    Console.BackgroundColor = themeColors.backgroundColor;
+                    Console.Clear();
+                    DisplayScreenHeader("Set Color Theme");
+                    Console.WriteLine($"\tNew foreground color: {Console.ForegroundColor}");
+                    Console.WriteLine($"\tNew background color: {Console.BackgroundColor}");
+
+                    Console.WriteLine();
+                    Console.Write("\tWould you like to keep this theme? [ yes / no ]");
+                    if (Console.ReadLine().ToLower() == "yes")
+                    {
+                        themeSet = true;
+                        WriteThemeData(themeColors.foregroundColor, themeColors.backgroundColor);
+                    }
+
+                } while (!themeSet);
+            }
+            DisplayContinuePrompt();
+        }
+
+        /// <summary>
+        /// *****************************************************************
+        /// *                      Get Theme Colors                         *
+        /// *****************************************************************
+        /// </summary>
+        /// <param name="finchRobot">finch robot object</param>
+        /// 
+
+
+        static ConsoleColor GetColorsFromUser(string property)
+        {
+            ConsoleColor consoleColor;
+            bool validConsoleColor;
+
+            do
+            {
+                Console.Write($"\tEnter a value for the {property}:");
+                validConsoleColor = Enum.TryParse<ConsoleColor>(Console.ReadLine(), true, out consoleColor);
+
+                if (!validConsoleColor)
+                {
+                    Console.WriteLine($"\t '{validConsoleColor}' is not a valid color value. Please try again...");
+                }
+                else
+                {
+                    validConsoleColor = true;
+                }
+
+            } while (!validConsoleColor);
+
+            return consoleColor;
+        }
+
+        /// <summary>
+        /// *****************************************************************
+        /// *                       Read Theme Data                         *
+        /// *****************************************************************
+        /// </summary>
+        /// <param name="finchRobot">finch robot object</param>
+        ///
+
+        static (ConsoleColor foregroundColor, ConsoleColor backgroundColor) ReadThemeData()
+        {
+            string dataPath = @"Data/Theme.txt";
+            string[] themeColors;
+
+            ConsoleColor foregroundColor;
+            ConsoleColor backgroundColor;
+
+            themeColors = File.ReadAllLines(dataPath);
+
+            Enum.TryParse(themeColors[0], true, out foregroundColor);
+            Enum.TryParse(themeColors[1], true, out backgroundColor);
+
+            return (foregroundColor, backgroundColor);
+        }
+
+        /// <summary>
+        /// *****************************************************************
+        /// *                      Write Theme Data                         *
+        /// *****************************************************************
+        /// </summary>
+        /// <param name="finchRobot">finch robot object</param>
+        ///
+
+        static void WriteThemeData(ConsoleColor foreground, ConsoleColor background)
+        {
+            string dataPath = @"Data/Theme.txt";
+
+            File.WriteAllText(dataPath, foreground.ToString() + "\n");
+            File.AppendAllText(dataPath, background.ToString());
         }
 
         #endregion
