@@ -1233,6 +1233,12 @@ namespace Project_FinchControl
 
         static void DisplaySetTheme()
         {
+
+            string fileIoStatusMessage;
+            string data;
+
+            data = ReadData(out fileIoStatusMessage);
+
             (ConsoleColor foregroundColor, ConsoleColor backgroundColor) themeColors;
             bool themeSet = false;
 
@@ -1244,6 +1250,8 @@ namespace Project_FinchControl
 
             Console.WriteLine($"\tCurrent foreground color: {Console.ForegroundColor}");
             Console.WriteLine($"\tCurrent background color: {Console.BackgroundColor}");
+            Console.WriteLine();
+            Console.WriteLine($"\tFile I/O status: {fileIoStatusMessage}");
             Console.WriteLine();
 
             Console.Write("\tWould you like to change the theme? [ yes / no ]");
@@ -1271,7 +1279,9 @@ namespace Project_FinchControl
 
                 } while (!themeSet);
             }
+
             DisplayContinuePrompt();
+
         }
 
         /// <summary>
@@ -1285,6 +1295,7 @@ namespace Project_FinchControl
 
         static ConsoleColor GetColorsFromUser(string property)
         {
+
             ConsoleColor consoleColor;
             bool validConsoleColor;
 
@@ -1305,6 +1316,7 @@ namespace Project_FinchControl
             } while (!validConsoleColor);
 
             return consoleColor;
+
         }
 
         /// <summary>
@@ -1317,6 +1329,7 @@ namespace Project_FinchControl
 
         static (ConsoleColor foregroundColor, ConsoleColor backgroundColor) ReadThemeData()
         {
+
             string dataPath = @"Data/Theme.txt";
             string[] themeColors;
 
@@ -1329,6 +1342,43 @@ namespace Project_FinchControl
             Enum.TryParse(themeColors[1], true, out backgroundColor);
 
             return (foregroundColor, backgroundColor);
+
+        }
+
+        /// <summary>
+        /// *****************************************************************
+        /// *                           Try/Catch                           *
+        /// *****************************************************************
+        /// </summary>
+        /// <param name="finchRobot">finch robot object</param>
+        ///
+
+        static string ReadData(out string fileIOStatusMessage)
+        {
+
+            string dataPath = @"Data/Theme.txt";
+            string data = "";
+
+            try
+            {
+                data = File.ReadAllText(dataPath);
+                fileIOStatusMessage = "Complete";
+            }
+            catch (DirectoryNotFoundException)
+            {
+                fileIOStatusMessage = "Unable to locate the folder for the data file.";
+            }
+            catch (FileNotFoundException)
+            {
+                fileIOStatusMessage = "Unable to locate the data file.";
+            }
+            catch (Exception)
+            {
+                fileIOStatusMessage = "Unable to read data file.";
+            }
+
+            return data;
+
         }
 
         /// <summary>
@@ -1341,10 +1391,12 @@ namespace Project_FinchControl
 
         static void WriteThemeData(ConsoleColor foreground, ConsoleColor background)
         {
+
             string dataPath = @"Data/Theme.txt";
 
             File.WriteAllText(dataPath, foreground.ToString() + "\n");
             File.AppendAllText(dataPath, background.ToString());
+
         }
 
         #endregion
