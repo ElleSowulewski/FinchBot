@@ -1306,7 +1306,7 @@ namespace Project_FinchControl
 
                 if (!validConsoleColor)
                 {
-                    Console.WriteLine($"\t '{validConsoleColor}' is not a valid color value. Please try again...");
+                    Console.WriteLine($"\t That not a valid color value. Please try again...");
                 }
                 else
                 {
